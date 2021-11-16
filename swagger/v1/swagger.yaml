@@ -1,0 +1,89 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  schemas:
+    person:
+      type: object
+      properties:
+        name:
+          type: string
+        cpf:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        birthday:
+          type: string
+        active:
+          type: boolean
+paths:
+  "/person":
+    get:
+      summary: show all person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Creates a Person
+      tags:
+      - Person
+      parameters: []
+      responses:
+        '201':
+          description: Person created
+        '400':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  "$ref": "#/components/schemas/person"
+              required:
+              - name
+              - cpf
+              - active
+  "/person/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show a person
+      tags:
+      - Person
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: Delete a Person
+      tags:
+      - Person
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Person Deleted with success!
+        '400':
+          description: invalid request
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
