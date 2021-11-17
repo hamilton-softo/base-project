@@ -21,18 +21,33 @@ components:
         active:
           type: boolean
 paths:
-  "/person":
+  "/people.json":
     get:
       summary: show all person
       tags:
-      - Person
+      - People
+      responses:
+        '200':
+          description: successful
+  "/people/{id}.json":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show a person
+      tags:
+      - People
       responses:
         '200':
           description: successful
     post:
       summary: Creates a Person
       tags:
-      - Person
+      - People
       parameters: []
       responses:
         '201':
@@ -51,25 +66,32 @@ paths:
               - name
               - cpf
               - active
-  "/person/{id}":
-    parameters:
-    - name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    get:
-      summary: show a person
+    put:
+      summary: Update a Person
       tags:
-      - Person
+      - People
+      parameters: []
       responses:
         '200':
-          description: successful
+          description: Person Updated
+        '400':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  "$ref": "#/components/schemas/person"
+              required:
+              - name
+              - cpf
+              - active
     delete:
       summary: Delete a Person
       tags:
-      - Person
+      - People
       parameters:
       - name: id
         in: path

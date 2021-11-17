@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get 'healthcheck' => 'healthcheck#index'
 
-  resources :person
+  resources :people
 
 
 
