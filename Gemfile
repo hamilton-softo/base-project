@@ -32,6 +32,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.19'
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'
+  gem "rswag-specs"
 end
 
 group :development do
@@ -49,3 +50,6 @@ gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 gem 'rswag', '~> 2.4'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'rswag-api'
+gem 'rswag-ui'

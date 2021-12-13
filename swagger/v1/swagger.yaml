@@ -1,0 +1,53 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/people":
+    post:
+      summary: "/people"
+      tags:
+      - People
+      parameters: []
+      responses:
+        '201':
+          description: Person created
+        '400':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                active:
+                  type: boolean
+                birthday:
+                  type: date
+                address:
+                  type: string
+                email:
+                  type: string
+              required:
+              - name
+              - cpf
+              - active
+    get:
+      summary: "/people"
+      tags:
+      - People
+      responses:
+        '200':
+          description: 
+        '400':
+          description: Bad request
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

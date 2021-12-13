@@ -218,6 +218,9 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   rspec-rails (~> 5.0, >= 5.0.2)
   rswag (~> 2.4)
+  rswag-api
+  rswag-specs
+  rswag-ui
   shoulda-matchers (~> 5.0)
   spring
   tzinfo-data
