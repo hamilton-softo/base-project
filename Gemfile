@@ -46,6 +46,7 @@ end
 group :test do
   gem 'database_cleaner-active_record', '~> 2.0', '>= 2.0.1'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov', require: false
 end
 
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
