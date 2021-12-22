@@ -1,6 +1,35 @@
 require "rails_helper"
 
 RSpec.describe "People", type: :request do
+  describe "GET /index" do
+
+    before do
+      @person = create(:person)
+    end
+
+    it "returns http success" do
+      get "/people"
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "returns an array of people" do
+      get "/people"
+
+      expected = [{
+        id: @person.id,
+        name: @person.name,
+        cpf: @person.cpf,
+        email: @person.email,
+        address: @person.address,
+        birthday: @person.birthday,
+        active: @person.active
+      }].to_json
+
+      expect(response.body).to eq(expected)
+    end
+  end
+
   describe "GET /show" do
 
     before do
