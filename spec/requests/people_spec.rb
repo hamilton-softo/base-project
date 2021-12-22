@@ -54,7 +54,7 @@ RSpec.describe "People", type: :request do
       end
     end
 
-    context "given an non existing person" do
+    context "given a non existing person" do
       it "returns http not found" do
         get "/people/12"
 
@@ -62,8 +62,27 @@ RSpec.describe "People", type: :request do
       end
 
       it "sets a body message" do
-        get "/people/12"
-        expected = { message: "Couldn't find Person with 'id'=12" }.to_json
+        get "/people/0"
+        expected = { message: "Couldn't find Person with 'id'=0" }.to_json
+
+        expect(response.body).to eq(expected)
+      end
+    end
+  end
+
+  describe "DELETE /people" do
+    context "given an existing person" do
+      it "returns http no_content" do
+        delete "/people/#{@person.id}"
+
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+
+    context "given a non existing person" do
+      it "returns an array of people" do
+        delete "/people/0"
+        expected = { message: "Couldn't find Person with 'id'=0" }.to_json
 
         expect(response.body).to eq(expected)
       end
