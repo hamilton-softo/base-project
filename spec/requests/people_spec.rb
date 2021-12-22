@@ -1,12 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "People", type: :request do
+  before do
+    @person = create(:person)
+  end
+
   describe "GET /index" do
-
-    before do
-      @person = create(:person)
-    end
-
     it "returns http success" do
       get "/people"
 
@@ -23,7 +22,7 @@ RSpec.describe "People", type: :request do
         email: @person.email,
         address: @person.address,
         birthday: @person.birthday,
-        active: @person.active
+        active: @person.active,
       }].to_json
 
       expect(response.body).to eq(expected)
@@ -31,13 +30,7 @@ RSpec.describe "People", type: :request do
   end
 
   describe "GET /show" do
-
-    before do
-      @person = create(:person)
-    end
-
     context "given an existing person" do
-
       it "returns http success" do
         get "/people/#{@person.id}"
 
@@ -54,7 +47,7 @@ RSpec.describe "People", type: :request do
           email: @person.email,
           address: @person.address,
           birthday: @person.birthday,
-          active: @person.active
+          active: @person.active,
         }.to_json
 
         expect(response.body).to eq(expected)
