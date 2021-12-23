@@ -164,5 +164,31 @@ describe 'People API' do
         end
       end
     end
+
+    delete 'Deletes a person' do
+      tags 'Person'
+      consumes 'application/json'
+      parameter name: :id, in: :path, type: :string
+
+      response '204', 'Person deleted' do
+        before { @person = create(:person) }
+
+        let(:id) { @person.id }
+
+        run_test! do |response|
+          expect(Person.count).to eq(0)
+        end
+      end
+
+      response '404', 'Not Found' do
+        examples 'application/json': { message: "Couldn't find Person with 'id'=0" }
+
+        let(:id) { 0 }
+
+        run_test! do |response|
+          expect(response.body).to eq({ message: "Couldn't find Person with 'id'=0" }.to_json)
+        end
+      end
+    end
   end
 end

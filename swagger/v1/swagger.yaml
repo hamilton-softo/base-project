@@ -206,6 +206,25 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/update_person"
+    delete:
+      summary: Deletes a person
+      tags:
+      - Person
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Person deleted
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                message: Couldn't find Person with 'id'=0
 servers:
 - url: http://{defaultHost}
   variables:
