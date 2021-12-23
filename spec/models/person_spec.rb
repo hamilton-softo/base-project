@@ -25,5 +25,12 @@ RSpec.describe Person, type: :model do
         expect(person).to be_valid
       end
     end
+
+    context 'active' do
+      it 'cant be nil' do
+        person = build(:person, active: nil)
+        expect(person).not_to be_valid
+      end
+    end
   end
 end
