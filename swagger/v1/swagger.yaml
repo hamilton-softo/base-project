@@ -62,6 +62,30 @@ components:
       - active
 paths:
   "/people":
+    get:
+      summary: List all people
+      tags:
+      - People
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: The desired page
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Returns all people
+          content:
+            application/json:
+              example:
+              - id: 1
+                name: James
+                email: some@nice.mail
+                address: Mulholland Drive
+                cpf: 419.356.777-05
+                birthday: '2019-05-17'
+                active: true
     post:
       summary: Creates a person
       tags:

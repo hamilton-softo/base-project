@@ -2,6 +2,34 @@ require 'swagger_helper'
 
 describe 'People API' do
   path '/people' do
+    get 'List all people' do
+      tags 'People'
+      consumes 'application/json'
+      parameter name: :page, in: :query, required: false, description: 'The desired page', schema: { type: 'integer' }
+
+      response '200', 'Returns all people' do
+        let(:page) { 1 }
+        before { @person = create(:person) }
+        examples 'application/json': [{
+                   id: 1, name: 'James', email: 'some@nice.mail', address: 'Mulholland Drive', cpf: '419.356.777-05',
+                   birthday: '2019-05-17', active: true
+                 }]
+
+        run_test! do |response|
+          expected = [{
+            id: @person.id,
+            name: @person.name,
+            cpf: @person.cpf,
+            email: @person.email,
+            address: @person.address,
+            birthday: @person.birthday,
+            active: @person.active
+          }].to_json
+          expect(response.body).to eq(expected)
+        end
+      end
+    end
+
     post 'Creates a person' do
       tags 'People'
       consumes 'application/json'
@@ -10,7 +38,7 @@ describe 'People API' do
       response '201', 'Person Created' do
         let(:person) {
           { name: 'James', email: 'some@nice.mail', address: 'Mulholland Drive', cpf: '419.356.777-05',
-           birthday: '2019-05-17', active: true }
+            birthday: '2019-05-17', active: true }
         }
         examples 'application/json': {
                    id: 1, name: 'James', email: 'some@nice.mail', address: 'Mulholland Drive', cpf: '419.356.777-05',
