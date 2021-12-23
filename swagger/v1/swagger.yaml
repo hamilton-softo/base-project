@@ -115,6 +115,36 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/new_person"
+  "/people/{id}":
+    get:
+      summary: Retrieves a person
+      tags:
+      - Person
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: person found
+          content:
+            application/json:
+              example:
+                id: 1
+                name: James
+                email: some@nice.mail
+                address: Mulholland Drive
+                cpf: 419.356.777-05
+                birthday: '2019-05-17'
+                active: true
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                message: Couldn't find Person with 'id'=0
 servers:
 - url: http://{defaultHost}
   variables:
