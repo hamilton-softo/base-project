@@ -5,7 +5,7 @@ RSpec.describe "People", type: :request do
     @person = create(:person)
   end
 
-  describe "GET /index" do
+  describe "GET /people" do
     it "returns http success" do
       get "/people"
 
@@ -29,7 +29,7 @@ RSpec.describe "People", type: :request do
     end
   end
 
-  describe "GET /show" do
+  describe "GET /people/:id" do
     context "given an existing person" do
       it "returns http success" do
         get "/people/#{@person.id}"
