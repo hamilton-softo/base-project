@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: %i[ show update ]
 
   def index
-    @people = Person.all
+    @people = Person.order(:id).page params[:page]
   end
 
   def create
