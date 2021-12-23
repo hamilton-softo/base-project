@@ -41,7 +41,7 @@ RSpec.configure do |config|
               active: { type: :boolean }
             }
           },
-          new_person: {
+          person_form: {
             type: 'object',
             properties: {
               name: { type: :string, example: 'James Franco' },
@@ -52,17 +52,6 @@ RSpec.configure do |config|
               active: { type: :boolean }
             },
             required: %w[name cpf active]
-          },
-          update_person: {
-            type: 'object',
-            properties: {
-              name: { type: :string, example: 'James Franco' },
-              email: { type: :string, example: 'acme@some.mail' },
-              cpf: { type: :string, example: '419.356.777-05' },
-              address: { type: :string, example: 'Mulholland Drive' },
-              birthday: { type: :string, pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/, example: '2019-05-17' },
-              active: { type: :boolean }
-            },
           }
         }
       },

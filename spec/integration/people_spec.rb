@@ -33,7 +33,7 @@ describe 'People API' do
     post 'Creates a person' do
       tags 'People'
       consumes 'application/json'
-      parameter name: :person, in: :body, schema: { '$ref' => '#/components/schemas/new_person' }
+      parameter name: :person, in: :body, schema: { '$ref' => '#/components/schemas/person_form' }
 
       response '201', 'Person Created' do
         let(:person) {
@@ -113,7 +113,7 @@ describe 'People API' do
       tags 'Person'
       consumes 'application/json'
       parameter name: :id, in: :path, type: :string
-      parameter name: :person, in: :body, schema: { '$ref' => '#/components/schemas/update_person' }
+      parameter name: :person, in: :body, schema: { '$ref' => '#/components/schemas/person_form' }
 
       response '200', 'person updated' do
         before { @person = create(:person) }
