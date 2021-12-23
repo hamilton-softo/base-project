@@ -60,6 +60,27 @@ components:
       - name
       - cpf
       - active
+    update_person:
+      type: object
+      properties:
+        name:
+          type: string
+          example: James Franco
+        email:
+          type: string
+          example: acme@some.mail
+        cpf:
+          type: string
+          example: 419.356.777-05
+        address:
+          type: string
+          example: Mulholland Drive
+        birthday:
+          type: string
+          pattern: "(?-mix:([0-9]{4})-(?:[0-9]{2})-([0-9]{2}))"
+          example: '2019-05-17'
+        active:
+          type: boolean
 paths:
   "/people":
     get:
@@ -145,6 +166,46 @@ paths:
             application/json:
               example:
                 message: Couldn't find Person with 'id'=0
+    patch:
+      summary: Updates a person
+      tags:
+      - Person
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: person updated
+          content:
+            application/json:
+              example:
+                id: 1
+                name: James
+                email: some@nice.mail
+                address: Mulholland Drive
+                cpf: 419.356.777-05
+                birthday: '2019-05-17'
+                active: true
+        '422':
+          description: Record Invalid
+          content:
+            application/json:
+              example:
+                message: 'Validation failed: Name can''t be blank'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                message: Couldn't find Person with 'id'=0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/update_person"
 servers:
 - url: http://{defaultHost}
   variables:
