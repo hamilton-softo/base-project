@@ -1,19 +1,19 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "People", type: :request do
+RSpec.describe 'People', type: :request do
   before do
     @person = create(:person)
   end
 
-  describe "GET /people" do
-    it "returns http success" do
-      get "/people"
+  describe 'GET /people' do
+    it 'returns http success' do
+      get '/people'
 
       expect(response).to have_http_status(:success)
     end
 
-    it "returns an array of people" do
-      get "/people"
+    it 'returns an array of people' do
+      get '/people'
 
       expected = [{
         id: @person.id,
@@ -22,22 +22,66 @@ RSpec.describe "People", type: :request do
         email: @person.email,
         address: @person.address,
         birthday: @person.birthday,
-        active: @person.active,
+        active: @person.active
       }].to_json
 
       expect(response.body).to eq(expected)
     end
   end
 
-  describe "GET /people/:id" do
-    context "given an existing person" do
-      it "returns http success" do
+  describe 'POST /people' do
+    let(:person) { build(:person) }
+    let(:person_param) {
+      { name: person.name,
+        cpf: person.cpf, email: person.email,
+        birthday: person.birthday, active: true }
+    }
+    context 'given valid params' do
+      it 'returns http created' do
+        post '/people', params: { person: person_param }
+
+        expect(response).to have_http_status(:created)
+      end
+
+      it 'returns the created person' do
+        post '/people', params: { person: person_param }
+
+        @person = Person.last
+
+        expected = {
+          id: @person.id,
+          name: @person.name,
+          cpf: @person.cpf,
+          email: @person.email,
+          address: @person.address,
+          birthday: @person.birthday,
+          active: @person.active
+        }.to_json
+
+        expect(response.body).to eq(expected)
+      end
+    end
+
+    context 'given invalid params' do
+      it 'returns an error' do
+        person.name = ''
+        post '/people', params: { person: person_param }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to eq({ message: "Validation failed: Name can't be blank" }.to_json)
+      end
+    end
+  end
+
+  describe 'GET /people/:id' do
+    context 'given an existing person' do
+      it 'returns http success' do
         get "/people/#{@person.id}"
 
         expect(response).to have_http_status(:success)
       end
 
-      it "returns the expected person data" do
+      it 'returns the expected person data' do
         get "/people/#{@person.id}"
 
         expected = {
@@ -47,22 +91,22 @@ RSpec.describe "People", type: :request do
           email: @person.email,
           address: @person.address,
           birthday: @person.birthday,
-          active: @person.active,
+          active: @person.active
         }.to_json
 
         expect(response.body).to eq(expected)
       end
     end
 
-    context "given a non existing person" do
-      it "returns http not found" do
-        get "/people/12"
+    context 'given a non existing person' do
+      it 'returns http not found' do
+        get '/people/12'
 
         expect(response).to have_http_status(:not_found)
       end
 
-      it "sets a body message" do
-        get "/people/0"
+      it 'sets a body message' do
+        get '/people/0'
         expected = { message: "Couldn't find Person with 'id'=0" }.to_json
 
         expect(response.body).to eq(expected)
@@ -70,18 +114,18 @@ RSpec.describe "People", type: :request do
     end
   end
 
-  describe "DELETE /people" do
-    context "given an existing person" do
-      it "returns http no_content" do
+  describe 'DELETE /people' do
+    context 'given an existing person' do
+      it 'returns http no_content' do
         delete "/people/#{@person.id}"
 
         expect(response).to have_http_status(:no_content)
       end
     end
 
-    context "given a non existing person" do
-      it "returns an array of people" do
-        delete "/people/0"
+    context 'given a non existing person' do
+      it 'returns an array of people' do
+        delete '/people/0'
         expected = { message: "Couldn't find Person with 'id'=0" }.to_json
 
         expect(response.body).to eq(expected)
