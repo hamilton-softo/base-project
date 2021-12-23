@@ -73,6 +73,70 @@ RSpec.describe 'People', type: :request do
     end
   end
 
+  describe 'PATCH /people/:id' do
+    context 'given valid params' do
+      it 'returns http created' do
+        patch "/people/#{@person.id}", params: { person: { name: 'James Franco' } }
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'returns the updated person' do
+        patch "/people/#{@person.id}", params: { person: { name: 'James Franco' } }
+
+        expected = {
+          id: @person.id,
+          name: 'James Franco',
+          cpf: @person.cpf,
+          email: @person.email,
+          address: @person.address,
+          birthday: @person.birthday,
+          active: @person.active
+        }.to_json
+
+        expect(response.body).to eq(expected)
+      end
+
+      it 'updates the person' do
+        patch "/people/#{@person.id}", params: { person: { name: 'James Franco' } }
+
+        @person.reload
+
+        expect(@person.name).to eq('James Franco')
+      end
+    end
+
+    context 'given invalid params' do
+      it 'returns http unprocessable entity' do
+        patch "/people/#{@person.id}", params: { person: { name: '' } }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'sets a body message' do
+        patch "/people/#{@person.id}", params: { person: { name: '' } }
+
+        expect(response.body).to eq({ message: "Validation failed: Name can't be blank" }.to_json)
+      end
+    end
+
+    context 'given a non existing person' do
+      it 'returns http not found' do
+        patch '/people/0', params: { person: { name: 'James Franco' } }
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'sets a body message' do
+        patch '/people/0', params: { person: { name: 'James Franco' } }
+
+        expected = { message: "Couldn't find Person with 'id'=0" }.to_json
+
+        expect(response.body).to eq(expected)
+      end
+    end
+  end
+
   describe 'GET /people/:id' do
     context 'given an existing person' do
       it 'returns http success' do
@@ -100,7 +164,7 @@ RSpec.describe 'People', type: :request do
 
     context 'given a non existing person' do
       it 'returns http not found' do
-        get '/people/12'
+        get '/people/0'
 
         expect(response).to have_http_status(:not_found)
       end
