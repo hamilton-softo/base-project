@@ -3,16 +3,14 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    json_response(@users)
   end
 
   def create
     @user = User.create!(user_params)
-    json_response(@user, :created)
+    render 'users/show', status: 201
   end
 
   def show
-    json_response(@user)
   end
 
   def update
