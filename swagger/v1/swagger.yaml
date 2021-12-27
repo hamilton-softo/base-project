@@ -1,0 +1,171 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users":
+    get:
+      summary: Retrieves all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  cpf:
+                    type: string
+                  email:
+                    type: string
+                  address:
+                    type: string
+                  birthday:
+                    type: string
+                  active:
+                    type: boolean
+                required:
+                - id
+                - name
+                - cpf
+                - email
+                - address
+                - birthday
+                - active
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - name
+              - cpf
+              - email
+              - address
+              - birthday
+              - active
+  "/users/{id}":
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  cpf:
+                    type: string
+                  email:
+                    type: string
+                  address:
+                    type: string
+                  birthday:
+                    type: string
+                  active:
+                    type: boolean
+                required:
+                - id
+                - name
+                - cpf
+                - email
+                - address
+                - birthday
+                - active
+        '404':
+          description: user not found
+        '406':
+          description: unsupported accept header
+    put:
+      summary: Updates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '204':
+          description: user updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - id
+    delete:
+      summary: Delete a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User deleted
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
