@@ -10,8 +10,7 @@ class UsersController < ApplicationController
     render 'users/show', status: 201
   end
 
-  def show
-  end
+  def show; end
 
   def update
     @user.update(user_params)
