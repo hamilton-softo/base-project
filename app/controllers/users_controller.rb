@@ -1,37 +1,37 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :destroy]
-      
-    def index
+  before_action :set_user, only: %i[show update destroy]
+
+  def index
     @users = User.all
     json_response(@users)
-    end
+  end
 
-    def create
+  def create
     @user = User.create!(user_params)
     json_response(@user, :created)
-    end
+  end
 
-    def show
+  def show
     json_response(@user)
-    end
+  end
 
-    def update
+  def update
     @user.update(user_params)
     head :no_content
-    end
+  end
 
-    def destroy
+  def destroy
     @user.destroy
     head :no_content
-    end
+  end
 
-    private
+  private
 
-    def user_params
+  def user_params
     params.permit(:name, :cpf, :email, :address, :birthday, :active)
-    end
+  end
 
-    def set_user
+  def set_user
     @user = User.find(params[:id])
-    end
+  end
 end
