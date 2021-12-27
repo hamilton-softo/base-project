@@ -8,6 +8,9 @@ RSpec.configure do |config|
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join('swagger').to_s
 
+  config.backtrace_inclusion_patterns = [%r{app|spec}]
+
+  # config.include SpecHelpers::Integration::ResponseValidator, :type => :request
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
   # be generated at the provided relative path under swagger_root
@@ -21,13 +24,56 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
+      base_path: '/api',
+      definitions: {
+        errors_object: {
+          type: 'object',
+          properties: {
+            errors: { '$ref' => '#/components/schemas/errors_map' }
+          }
+        },
+        errors_map: {
+          type: 'object',
+          additionalProperties: {
+            type: 'array',
+            items: { type: 'string' }
+          }
+        },
+        person: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+            person: {
+              id: { type: 'string' },
+              name: { type: 'string' },
+              email: { type: 'string' },
+              address: { type: 'string' },
+              birthday: { type: 'string' }
+            }
+          },
+          required: %w[id]
+        },
+        new_person: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            cpf: { type: 'string' },
+            email: { type: 'string' },
+            address: { type: 'string' },
+            birthday: { type: 'string' },
+            active: { type: 'string' }
+          },
+          required: %w[name cpf active]
+        }
+      },
+      # host: 'localhost:3000',
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }

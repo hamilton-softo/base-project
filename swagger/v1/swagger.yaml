@@ -3,51 +3,180 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+base_path: "/api"
+definitions:
+  errors_object:
+    type: object
+    properties:
+      errors:
+        "$ref": "#/components/schemas/errors_map"
+  errors_map:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: string
+  person:
+    type: object
+    properties:
+      message:
+        type: string
+      person:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        birthday:
+          type: string
+    required:
+    - id
+  new_person:
+    type: object
+    properties:
+      name:
+        type: string
+      cpf:
+        type: string
+      email:
+        type: string
+      address:
+        type: string
+      birthday:
+        type: string
+      active:
+        type: string
+    required:
+    - name
+    - cpf
+    - active
 paths:
-  "/people":
+  "/api/people":
+    get:
+      summary: list people
+      tags:
+      - People
+      responses:
+        '200':
+          description: successful
     post:
-      summary: "/people"
+      summary: create person
       tags:
       - People
       parameters: []
       responses:
         '201':
-          description: Person created
-        '400':
-          description: invalid request
+          description: successful
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                cpf:
-                  type: string
-                active:
-                  type: boolean
-                birthday:
-                  type: date
-                address:
-                  type: string
-                email:
-                  type: string
-              required:
-              - name
-              - cpf
-              - active
+                person:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    cpf:
+                      type: string
+                    email:
+                      type: string
+                    address:
+                      type: string
+                    birthday:
+                      type: string
+                    active:
+                      type: string
+                  required:
+                  - name
+                  - cpf
+                  - active
+  "/api/people/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
     get:
-      summary: "/people"
-      tags:
-      - People
+      summary: show person
       responses:
         '200':
-          description: 
-        '400':
-          description: Bad request
+          description: successful
+    patch:
+      summary: update person
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    cpf:
+                      type: string
+                    email:
+                      type: string
+                    address:
+                      type: string
+                    birthday:
+                      type: string
+                    active:
+                      type: string
+                  required:
+                  - name
+                  - cpf
+                  - active
+    put:
+      summary: update person
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                person:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    cpf:
+                      type: string
+                    email:
+                      type: string
+                    address:
+                      type: string
+                    birthday:
+                      type: string
+                    active:
+                      type: string
+                  required:
+                  - name
+                  - cpf
+                  - active
+    delete:
+      summary: delete person
+      responses:
+        '204':
+          description: successful
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000

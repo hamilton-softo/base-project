@@ -9,7 +9,6 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false
-  config.action_view.cache_template_loading = true
 
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
@@ -50,11 +49,18 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation = :raise
 
   # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
+  # config.active_support.disallowed_deprecation_warnings = []
+
+  config.factory_bot.definition_file_paths = ["spec/factories"]
+
+  config.force_ssl = false
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.swagger_dry_run = true
 end
+
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'

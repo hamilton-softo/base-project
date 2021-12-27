@@ -32,7 +32,7 @@ services:
       POSTGRES_DB: ruby_app_dev
     restart: unless-stopped
     ports:
-      - 5432:5432
+      - 5434:5432
     networks:
       - rails-network
     volumes:

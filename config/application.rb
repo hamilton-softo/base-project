@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 # require "sprockets/railtie"
 require "rails/test_unit/railtie"
+# require 'capybara/rails'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -36,5 +37,9 @@ module BaseProject
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    # Capybara.app = BaseProject
+    # Capybara.server = :puma # Until your setup is working
+    # Capybara.server = :puma, { Silent: true } # To clean up your test output
+    config.factory_bot.definition_file_paths = ["spec/factories"]
   end
 end

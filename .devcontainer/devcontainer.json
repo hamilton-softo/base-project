@@ -24,7 +24,7 @@
         "driver": "PostgreSQL",
         "previewLimit": 50,
         "server": "localhost",
-        "port": 5432,
+        "port": 5434,
         // update this to match config/database.yml
         "database": "app_development",
         "username": "vscode"

@@ -1,55 +1,56 @@
-module Api
-  class PeopleController < ApplicationController
-    before_action :set_person, only: [:show, :update, :destroy]
+class Api::PeopleController < ApplicationController
+  before_action :set_person, only: %i[show update destroy]
 
-    def index
-      render json: Person.all, status: :ok
+  def index
+    @people = Person.all
+    render json: { body: { data: @people } }, status: :ok
+  end
+
+  def create
+    @person = Person.new(set_params)
+
+    if @person.save
+      render json: { body: { message: 'Person created!', person: @person, status: 201}}, status: :created
+    else
+      render json: { body: { message: 'Error', errors: @person.errors, status: 400 } }, status: :bad_request
     end
+  end
 
-    def create
-      @person = Person.new(set_params)
-
-      unless @person.valid?
-        render json: { message: "Error", errors: @person.errors.full_messages, status: 400 }, status: :bad_request
-      end
-
-      @person.save
-      render json: { message: "Person created!", person: @person, status: 201 }, status: :created
+  def show
+    if @person.valid?
+      render json: { body: { data: @person} }, status: :ok
+    else
+      render json: { body: { message: 'Person not found!', status: 404 } }, status: :not_found
     end
+  end
 
-    def show
-      if @person.nil?
-        render json: { message: "Person not found!", status: 404 }, status: :not_found
-      end
-      render json: { person: @person }, status: :ok
+  def update
+    if @person.update(set_params)
+      render json: { body: { message: 'Person updated!', person: @person, status: 200} }, status: :ok
+    else
+      render json: { body: { message: 'Error', errors: @person.errors, status: 400 } }, status: :bad_request
     end
+  end
 
-    def update
-      unless @person.valid?
-        render json: { message: "Error", errors: @person.errors.full_messages, status: 400 }, status: :bad_request
-      end
+  def destroy
+    render json: { body: { message: 'Person not found!', status: 404 } }, status: :not_found unless @person.valid?
+    @person.destroy
+    render json: {body: {} }, status: :no_content
 
-      @person.update!(set_params)
-      render json: { message: "Person updated!", person: @person, status: 200 }, status: :ok
-    end
+    # if @person.update({ 'active': false })
+    #   render json: { message: 'Error to remove a person', errors: @person.errors, status: 400 }, status: :bad_request
+    # else
+    #   render json: {}, status: :no_content
+    # end
+  end
 
-    def destroy
-      if @person.nil?
-        render json: { message: "Person not found!", status: 404 }, status: :not_found
-      end
+  private
 
-      @person.destroy
-      render json: {}, status: :no_content
-    end
+  def set_params
+    params.require(:person).permit(:name, :cpf, :active, :birthday, :address, :email)
+  end
 
-    private
-
-    def set_params
-      params.require(:person).permit(:name, :cpf, :active, :birthday, :address, :email)
-    end
-
-    def set_person
-      @person = Person.find(params[:id])
-    end
+  def set_person
+    @person = Person.find(params[:id])
   end
 end

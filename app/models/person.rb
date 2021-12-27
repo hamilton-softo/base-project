@@ -1,5 +1,3 @@
 class Person < ApplicationRecord
-  validates :name, presence: true
-  validates :cpf, presence: true
-  validates :active, presence: true
+  validates :name, :cpf, :active, presence: true
 end

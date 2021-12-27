@@ -1,9 +1,10 @@
 default: &default
   adapter: postgresql
   encoding: utf8
-  host: rails_db
+  host: localhost
   username: postgres
   password: postgres
+  port: 5432
 
 development:
   <<: *default
