@@ -46,7 +46,7 @@ CREATE TABLE public.ar_internal_metadata (
 CREATE TABLE public.persons (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     name character varying NOT NULL,
-    cpf character varying NOT NULL,
+    cpf character varying(11) NOT NULL,
     email character varying(100),
     address character varying,
     birthday date,
