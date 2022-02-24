@@ -112,7 +112,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: name found
+          description: user found
         '404':
           description: user not found
       requestBody:
@@ -137,6 +137,21 @@ paths:
               - name
               - cpf
               - active
+    delete:
+      summary: Destroy a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: user destroyed
+        '404':
+          description: user not found
 servers:
 - url: https://{defaultHost}
   variables:

@@ -103,7 +103,7 @@ describe 'Users API' do
           },
           required: [ 'name', 'cpf', 'active' ]
         }
-      response '200', 'name found' do
+      response '200', 'user found' do
 
 
         let(:id) { create(:user).id }
@@ -114,6 +114,25 @@ describe 'Users API' do
       response '404', 'user not found' do
         let(:id) { 'invalid' }
         let(:user) { {name: ''} }
+        run_test!
+      end
+    end
+  end
+
+  path '/users/{id}' do
+    delete 'Destroy a user' do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :id, :in => :path, :type => :integer
+
+      response '204', 'user destroyed' do
+        let(:id) { create(:user).id }
+        run_test!
+      end
+
+      response '404', 'user not found' do
+        let(:id) { 'invalid' }
         run_test!
       end
     end
