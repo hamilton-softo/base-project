@@ -7,20 +7,22 @@ describe 'Users API' do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        properties: {
-          name: { type: :string },
-          cpf: { type: :string },
-          email: { type: :string },
-          address: { type: :string },
-          birthday: { type: :string },
-          active: { type: :boolean }
+      parameter name: :users, in: :body, schema: {
+        type: :array,
+        items: {
+          properties: {
+            name: { type: :string },
+            cpf: { type: :string },
+            email: { type: :string },
+            address: { type: :string },
+            birthday: { type: :string },
+            active: { type: :boolean }
+          }
         }
       }
 
       response '200', 'List of users' do
-        let(:user) { attributes_for(:user) }
+        let(:users) { [attributes_for(:user)] }
         run_test!
       end
     end
