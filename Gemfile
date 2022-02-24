@@ -16,6 +16,9 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.2"
   gem "ffaker"
   gem "rspec-rails", "~> 5.0", ">= 5.0.2"
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :development do
