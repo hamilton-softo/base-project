@@ -1,0 +1,144 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users":
+    get:
+      summary: List users
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: List of users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - name
+              - cpf
+              - active
+  "/users/{id}":
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  cpf:
+                    type: string
+                  email:
+                    type: string
+                  address:
+                    type: string
+                  birthday:
+                    type: string
+                  active:
+                    type: boolean
+                required:
+                - name
+                - cpf
+                - active
+        '404':
+          description: user not found
+    put:
+      summary: Update a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: name found
+        '404':
+          description: user not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - name
+              - cpf
+              - active
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
