@@ -2,8 +2,8 @@ default: &default
   adapter: postgresql
   encoding: utf8
   host: localhost
-  username: postgres
-  password: postgres
+  username: joao
+  password: 2521
 
 development:
   <<: *default
@@ -16,8 +16,8 @@ test:
 production:
   <<: *default
   database: base_project_production
-  user: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  user: joao
+  password: 2521
   host: <%= ENV['DATABASE_HOST'] %>
   port: <%= ENV['DATABASE_PORT'] %>
   pool: <%= ENV["DATABASE_POOL"] || 5 %>
