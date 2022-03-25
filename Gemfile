@@ -30,8 +30,11 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
   gem 'factory_bot_rails', '~> 6.2'
+  gem 'to_factory'
   gem 'faker', '~> 2.19'
+  gem 'cpf_faker'
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'
+  gem 'guard-rspec'
 end
 
 group :development do
