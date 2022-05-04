@@ -1,8 +1,7 @@
-# frozen_string_literal: true
-
 require 'swagger_helper'
 
 describe 'People API' do
+
   path '/people' do
     get 'List people' do
       tags 'People'

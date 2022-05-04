@@ -1,0 +1,144 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/people":
+    get:
+      summary: List people
+      tags:
+      - People
+      parameters: []
+      responses:
+        '200':
+          description: List of people
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+    post:
+      summary: Creates a person
+      tags:
+      - People
+      parameters: []
+      responses:
+        '201':
+          description: person created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - name
+              - cpf
+              - active
+  "/people/{id}":
+    get:
+      summary: Retrieves a person
+      tags:
+      - People
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: person found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  cpf:
+                    type: string
+                  email:
+                    type: string
+                  address:
+                    type: string
+                  birthday:
+                    type: string
+                  active:
+                    type: boolean
+                required:
+                - name
+                - cpf
+                - active
+        '404':
+          description: person not found
+    put:
+      summary: Update a person
+      tags:
+      - People
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: name found
+        '404':
+          description: person not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cpf:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                birthday:
+                  type: string
+                active:
+                  type: boolean
+              required:
+              - name
+              - cpf
+              - active
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
